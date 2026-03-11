@@ -21,6 +21,7 @@ class addCategoryController: UIViewController {
     @IBAction func addCategoryAction(_ sender: Any) {
         self.dismiss(animated: true){
             self.categoryName = self.categoryNameField.text ?? ""
+            print(self.categoryName)
         }
     }
     

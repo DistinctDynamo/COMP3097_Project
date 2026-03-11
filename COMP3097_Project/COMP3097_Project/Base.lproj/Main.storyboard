@@ -222,6 +222,9 @@ Grand Total                                      108.72</string>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                     </view>
                     <navigationItem key="navigationItem" title="Manage Categories" style="editor" id="N5d-V8-WkT"/>
+                    <connections>
+                        <outlet property="listOfCategories" destination="OxH-1z-0a8" id="AFm-xL-ph1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kid-rp-9PH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -255,6 +258,7 @@ Grand Total                                      108.72</string>
                                 <buttonConfiguration key="configuration" style="filled" title="Add"/>
                                 <connections>
                                     <action selector="addCategoryAction:" destination="GxY-EN-QbV" eventType="touchUpInside" id="9v6-9E-nYU"/>
+                                    <segue destination="A16-9a-uUG" kind="unwind" unwindAction="unwindToCategories:" id="khV-2o-WxH"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -267,6 +271,7 @@ Grand Total                                      108.72</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mNJ-yW-Rdt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="A16-9a-uUG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3727.480916030534" y="-207.04225352112678"/>
         </scene>
