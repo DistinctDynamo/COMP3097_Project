@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1846E7562F60F958003FF534 /* addCategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1846E7552F60F958003FF534 /* addCategoryController.swift */; };
 		18E3DA7D2F32B1B0000A34EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E3DA7C2F32B1B0000A34EF /* AppDelegate.swift */; };
 		18E3DA7F2F32B1B0000A34EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E3DA7E2F32B1B0000A34EF /* SceneDelegate.swift */; };
 		18E3DA812F32B1B0000A34EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E3DA802F32B1B0000A34EF /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1846E7552F60F958003FF534 /* addCategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addCategoryController.swift; sourceTree = "<group>"; };
 		18E3DA792F32B1B0000A34EF /* COMP3097_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COMP3097_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E3DA7C2F32B1B0000A34EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18E3DA7E2F32B1B0000A34EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				18E3DA7E2F32B1B0000A34EF /* SceneDelegate.swift */,
 				18E3DA802F32B1B0000A34EF /* ViewController.swift */,
 				18E3DA822F32B1B0000A34EF /* Main.storyboard */,
+				1846E7552F60F958003FF534 /* addCategoryController.swift */,
 				18E3DA942F32B7F0000A34EF /* TotalsViewController.swift */,
 				18E3DA922F32B7CE000A34EF /* CategoriesViewController.swift */,
 				18E3DA902F32B693000A34EF /* HomeViewController.swift */,
@@ -153,6 +156,7 @@
 				18E3DA952F32B7F0000A34EF /* TotalsViewController.swift in Sources */,
 				18E3DA912F32B693000A34EF /* HomeViewController.swift in Sources */,
 				18E3DA932F32B7CE000A34EF /* CategoriesViewController.swift in Sources */,
+				1846E7562F60F958003FF534 /* addCategoryController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -207,8 +207,16 @@ Grand Total                                      108.72</string>
                                 <rect key="frame" x="31" y="173" width="322" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Add"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add Category"/>
+                                <connections>
+                                    <segue destination="GxY-EN-QbV" kind="presentation" identifier="addCategory" id="uBZ-9e-N3g"/>
+                                </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OxH-1z-0a8">
+                                <rect key="frame" x="31" y="250" width="322" height="472"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZIe-S0-jf6"/>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -219,101 +227,48 @@ Grand Total                                      108.72</string>
             </objects>
             <point key="canvasLocation" x="2846.5648854961833" y="-207.04225352112678"/>
         </scene>
-        <!--Back-->
-        <scene sceneID="M7E-VN-Vba">
+        <!--Add Category Controller-->
+        <scene sceneID="MW8-cZ-KX4">
             <objects>
-                <viewController id="O3c-j5-QmV" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="euB-NE-AlP">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                <viewController id="GxY-EN-QbV" customClass="addCategoryController" customModule="COMP3097_Project" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dz2-2m-DiZ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvd-Gz-xS9">
-                                <rect key="frame" x="16" y="103" width="361" height="43"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Category Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUM-Ph-LfA">
+                                <rect key="frame" x="105" y="159" width="183" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fyw-pV-woT">
+                                <rect key="frame" x="51" y="222" width="299" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCh-Gd-m4c">
+                                <rect key="frame" x="169" y="295" width="55" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Add New Item"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add"/>
+                                <connections>
+                                    <action selector="addCategoryAction:" destination="GxY-EN-QbV" eventType="touchUpInside" id="9v6-9E-nYU"/>
+                                </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Df0-V4-ChT">
-                                <rect key="frame" x="16" y="162" width="361" height="111"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="W43-qg-29J">
-                                <rect key="frame" x="23" y="159.66666666666663" width="101" height="115"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iFb-Iz-IGf">
-                                <rect key="frame" x="132" y="172" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">Potato
-Price: $1.64 ea
-Quantity: 10
-Taxable: Yes</string>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="akX-5j-gnv">
-                                <rect key="frame" x="16" y="287.66666666666674" width="361" height="111"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5KP-9q-HkP">
-                                <rect key="frame" x="23" y="285.66666666666674" width="101" height="115"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fOC-vT-86f">
-                                <rect key="frame" x="132" y="297.66666666666674" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">Zucchini
-Price: $1.61 ea
-Quantity: 5
-Taxable: Yes</string>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="r3a-gb-Bnk">
-                                <rect key="frame" x="16" y="413.66666666666663" width="361" height="111"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gME-dB-J8P">
-                                <rect key="frame" x="23" y="411.66666666666663" width="101" height="115"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0rO-he-nBY">
-                                <rect key="frame" x="132" y="423.66666666666663" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">Broccoli
-Price: $3.88 ea
-Quantity: 3
-Taxable: Yes</string>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="BhZ-qM-VfU"/>
-                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                        <viewLayoutGuide key="safeArea" id="chF-IE-gEo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Back" style="editor" id="HNq-Bb-ebS"/>
+                    <connections>
+                        <outlet property="categoryNameField" destination="fyw-pV-woT" id="GA9-Rf-sJF"/>
+                        <outlet property="categoryNameLabel" destination="VUM-Ph-LfA" id="u2S-i5-HfC"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UkO-rh-VcE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mNJ-yW-Rdt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3604" y="-207"/>
+            <point key="canvasLocation" x="3727.480916030534" y="-207.04225352112678"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gw6-0p-APz">
@@ -335,9 +290,11 @@ Taxable: Yes</string>
         </scene>
     </scenes>
     <resources>
-        <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
