@@ -38,6 +38,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func unwindToCategories(_ segue:UIStoryboardSegue){
         if let src = segue.source as? addCategoryController{
             categories.append(src.categoryName)
+            print(categories)
             listOfCategories.reloadData()
         }
     }
