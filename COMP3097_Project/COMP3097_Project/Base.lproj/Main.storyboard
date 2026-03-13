@@ -301,6 +301,9 @@ Grand Total                                      108.72</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Total and Subtotals"/>
+                                <connections>
+                                    <segue destination="pHn-lD-QXC" kind="show" identifier="totalsFromCategories" id="Qds-VU-z0k"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZIe-S0-jf6"/>
@@ -389,6 +392,9 @@ Grand Total                                      108.72</string>
             <point key="canvasLocation" x="87.786259541984734" y="-27.464788732394368"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Qds-VU-z0k"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
