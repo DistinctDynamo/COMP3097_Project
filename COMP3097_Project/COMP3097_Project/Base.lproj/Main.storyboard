@@ -215,6 +215,9 @@ Grand Total                                      108.72</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Add Product"/>
+                                <connections>
+                                    <action selector="addProduct:" destination="g5h-44-Vzq" eventType="touchUpInside" id="so9-WY-5QW"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m5t-Y7-Nuu">
                                 <rect key="frame" x="246" y="647" width="62" height="35"/>
@@ -263,6 +266,9 @@ Grand Total                                      108.72</string>
                     <navigationItem key="navigationItem" id="py5-jA-74Q"/>
                     <connections>
                         <outlet property="currentListOfProducts" destination="N2i-DB-2TU" id="pwJ-iG-pE0"/>
+                        <outlet property="nameTextField" destination="lll-MI-ZbX" id="fKy-yr-Hhj"/>
+                        <outlet property="priceTextField" destination="v6F-vc-PeI" id="aui-Xa-dtO"/>
+                        <outlet property="quantityTextField" destination="sFb-PS-anh" id="z5p-Lm-Xcg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yfr-a2-LxB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

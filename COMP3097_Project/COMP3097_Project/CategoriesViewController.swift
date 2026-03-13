@@ -11,7 +11,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     var categories:[String] = []
     var category:Int = 0
-    var listOfProducts:[[Product]]=[[]]
+    var listOfProducts:[[Product]]=[]
     let cellReuseIdentifier = "cell"
     
     @IBOutlet weak var listOfCategories: UITableView!
