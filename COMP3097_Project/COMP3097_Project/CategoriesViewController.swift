@@ -11,7 +11,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     var categories:[String] = []
     var category:Int = 0
-    var listOfProducts:[[Product]]=[]
+    var listOfProducts:[[Product]]=[[]]
     let cellReuseIdentifier = "cell"
     
     @IBOutlet weak var listOfCategories: UITableView!
@@ -42,6 +42,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func unwindToCategories(_ segue:UIStoryboardSegue){
         if let src = segue.source as? addCategoryController{
             categories.append(src.categoryName)
+            listOfProducts.append([])
             print(categories)
             listOfCategories.reloadData()
         }

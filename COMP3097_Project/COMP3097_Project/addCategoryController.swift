@@ -25,6 +25,10 @@ class addCategoryController: UIViewController {
         }
     }
     
+    @IBAction func dismiss(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 

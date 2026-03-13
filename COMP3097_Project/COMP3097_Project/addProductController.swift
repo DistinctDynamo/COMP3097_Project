@@ -33,6 +33,11 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableViiew:UITableView, didSelectRowAt indexPath: IndexPath){
         print(indexPath.row)
     }
+    
+    @IBAction func dismiss(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
