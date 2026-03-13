@@ -7,14 +7,22 @@
 
 import UIKit
 
+protocol AddProductDelegate: AnyObject {
+    func didUpdateProducts(_ products: [Product], forCategoryAt index: Int)
+}
+
 class addProductController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var listOfProducts:[Product]=[]
+    var categoryIndex: Int = 0
+    weak var delegate: AddProductDelegate?
+    
     let cellReuseIdentifier = "cell"
     
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var currentListOfProducts: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,15 +30,16 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         currentListOfProducts.delegate=self
         currentListOfProducts.dataSource=self    }
     
-    @IBOutlet weak var currentListOfProducts: UITableView!
-    
     func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int)->Int{
         return self.listOfProducts.count
     }
     
-    func tableView(_ tableView:UITableView, cellForRowAt indexPath: IndexPath)->UITableViewCell{
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as UITableViewCell
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+
+        let product = listOfProducts[indexPath.row]
+        cell.textLabel?.text = "\(product.name) | Qty: \(product.quantity) | $\(product.price)"
+
         return cell
     }
     
@@ -75,12 +84,15 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         let newProduct = Product(name: name, quantity: quantity, price: price)
-        listOfProducts.append(newProduct)
-        currentListOfProducts.reloadData()
-        
-        nameTextField.text = ""
-        priceTextField.text = ""
-        quantityTextField.text = ""
+            listOfProducts.append(newProduct)
+
+            delegate?.didUpdateProducts(listOfProducts, forCategoryAt: categoryIndex)
+
+            currentListOfProducts.reloadData()
+
+            nameTextField.text = ""
+            priceTextField.text = ""
+            quantityTextField.text = ""
     }
     
     /*

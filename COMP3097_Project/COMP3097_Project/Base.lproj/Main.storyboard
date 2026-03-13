@@ -294,7 +294,7 @@ Grand Total                                      108.72</string>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Add Category"/>
                                 <connections>
-                                    <segue destination="GxY-EN-QbV" kind="presentation" identifier="addCategory" id="uBZ-9e-N3g"/>
+                                    <segue destination="GxY-EN-QbV" kind="presentation" identifier="viewAddCategory" id="uBZ-9e-N3g"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="OxH-1z-0a8">
@@ -346,16 +346,6 @@ Grand Total                                      108.72</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCh-Gd-m4c">
-                                <rect key="frame" x="105" y="295" width="55" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Add"/>
-                                <connections>
-                                    <action selector="addCategoryAction:" destination="GxY-EN-QbV" eventType="touchUpInside" id="9v6-9E-nYU"/>
-                                    <segue destination="A16-9a-uUG" kind="unwind" unwindAction="unwindToCategories:" id="khV-2o-WxH"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X59-2Q-TB0">
                                 <rect key="frame" x="226" y="295" width="62" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -363,6 +353,15 @@ Grand Total                                      108.72</string>
                                 <buttonConfiguration key="configuration" style="filled" title="Back"/>
                                 <connections>
                                     <action selector="dismiss:" destination="GxY-EN-QbV" eventType="touchUpInside" id="9N9-Vw-MYU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5Z-Q5-zHo">
+                                <rect key="frame" x="105" y="295" width="55" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add"/>
+                                <connections>
+                                    <action selector="addCategoryAction:" destination="GxY-EN-QbV" eventType="touchUpInside" id="S7j-xS-9BO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -375,7 +374,6 @@ Grand Total                                      108.72</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mNJ-yW-Rdt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="A16-9a-uUG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3727.480916030534" y="-207.04225352112678"/>
         </scene>
@@ -399,7 +397,7 @@ Grand Total                                      108.72</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Qds-VU-z0k"/>
+        <segue reference="ant-mA-CzV"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

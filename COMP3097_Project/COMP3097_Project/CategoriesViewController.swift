@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddCategoryDelegate, AddProductDelegate{
 
     var categories:[String] = []
     var category:Int = 0
@@ -15,6 +15,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     let cellReuseIdentifier = "cell"
     
     @IBOutlet weak var listOfCategories: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,25 +40,35 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         performSegue(withIdentifier:"viewAddProducts", sender: self)
     }
     
-    @IBAction func unwindToCategories(_ segue:UIStoryboardSegue){
-        if let src = segue.source as? addCategoryController{
-            categories.append(src.categoryName)
-            listOfProducts.append([])
-            print(categories)
-            listOfCategories.reloadData()
-        }
+    func didAddCategory(_ categoryName: String) {
+        categories.append(categoryName)
+        listOfProducts.append([])
+        print(categories)
+        listOfCategories.reloadData()
     }
-  
+    
+    func didUpdateProducts(_ products: [Product], forCategoryAt index: Int) {
+        listOfProducts[index] = products
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier{
+        print("Segue identifier:", segue.identifier ?? "nil")
+
+        switch segue.identifier {
         case "viewAddProducts":
-            if let dest = segue.destination as?
-                addProductController{
+            if let dest = segue.destination as? addProductController {
                 dest.listOfProducts = listOfProducts[category]
+                dest.categoryIndex = category
+                dest.delegate = self
             }
+
+        case "viewAddCategory":
+            if let dest = segue.destination as? addCategoryController {
+                dest.delegate = self
+            }
+
         default:
-            print("Unknown segue")
+            print("Unknown segue:", segue.identifier ?? "nil")
         }
     }
-
 }
