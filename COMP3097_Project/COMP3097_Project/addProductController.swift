@@ -7,17 +7,32 @@
 
 import UIKit
 
-class addProductController: UIViewController {
+class addProductController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var listOfProducts:[Product]=[]
+    let cellReuseIdentifier = "cell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.currentListOfProducts.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        currentListOfProducts.delegate=self
+        currentListOfProducts.dataSource=self    }
+    
+    @IBOutlet weak var currentListOfProducts: UITableView!
+    
+    func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int)->Int{
+        return self.listOfProducts.count
     }
     
-
+    func tableView(_ tableView:UITableView, cellForRowAt indexPath: IndexPath)->UITableViewCell{
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as UITableViewCell
+        
+        return cell
+    }
+    
+    func tableView(_ tableViiew:UITableView, didSelectRowAt indexPath: IndexPath){
+        print(indexPath.row)
+    }
     /*
     // MARK: - Navigation
 
