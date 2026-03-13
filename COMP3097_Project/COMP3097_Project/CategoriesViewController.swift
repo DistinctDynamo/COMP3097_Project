@@ -10,6 +10,8 @@ import UIKit
 class CategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var categories:[String] = []
+    var category:Int = 0
+    var listOfProducts:[[Product]]=[]
     let cellReuseIdentifier = "cell"
     
     @IBOutlet weak var listOfCategories: UITableView!
@@ -32,7 +34,9 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableViiew:UITableView, didSelectRowAt indexPath: IndexPath){
+        category=indexPath.row
         print(indexPath.row)
+        performSegue(withIdentifier:"viewAddProducts", sender: self)
     }
     
     @IBAction func unwindToCategories(_ segue:UIStoryboardSegue){
@@ -43,14 +47,16 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
   
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier{
+        case "viewAddProducts":
+            if let dest = segue.destination as?
+                addProductController{
+                dest.listOfProducts = listOfProducts[category]
+            }
+        default:
+            print("Unknown segue")
+        }
     }
-    */
 
 }
