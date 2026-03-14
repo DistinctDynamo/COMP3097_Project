@@ -67,12 +67,11 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
                 dest.delegate = self
             }
             
-        // ADD THIS NEW CASE HERE:
-        case "viewTotals":
-            if let dest = segue.destination as? TotalsViewController {
-                dest.categories = self.categories
-                dest.listOfProducts = self.listOfProducts
-            }
+        case "totalsFromCategories":
+                    if let dest = segue.destination as? TotalsViewController {
+                        dest.categories = self.categories
+                        dest.listOfProducts = self.listOfProducts
+                    }
 
         default:
             print("Unknown segue:", segue.identifier ?? "nil")

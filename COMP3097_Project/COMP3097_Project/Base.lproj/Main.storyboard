@@ -138,9 +138,8 @@ Grand Total                                40.79 </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QK4-bh-mgP">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QK4-bh-mgP">
                                 <rect key="frame" x="16" y="293" width="361" height="117"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <string key="text">Item 1                                        10.24 X 1 = 10.24
 
@@ -182,8 +181,17 @@ Grand Total                                      108.72</string>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rhw-9Q-m8O"/>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
+                        <constraints>
+                            <constraint firstItem="QK4-bh-mgP" firstAttribute="centerY" secondItem="rhw-9Q-m8O" secondAttribute="centerY" id="G51-6U-NS6"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Total and Subtotals" style="editor" id="yim-u1-zfO"/>
+                    <connections>
+                        <outlet property="category1TextView" destination="uxH-Di-ZDy" id="yxx-jl-4oA"/>
+                        <outlet property="category2TextView" destination="QK4-bh-mgP" id="kGT-3l-tCf"/>
+                        <outlet property="category3TextView" destination="WGb-6g-L5f" id="f8R-9B-Ijn"/>
+                        <outlet property="overallTotalTextView" destination="sxH-Tt-l4j" id="O9f-oe-4Cq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUP-lg-AG3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
