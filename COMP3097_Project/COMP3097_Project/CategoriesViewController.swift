@@ -54,7 +54,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("Segue identifier:", segue.identifier ?? "nil")
 
-        sswitch segue.identifier {
+        switch segue.identifier {
         case "viewAddProducts":
             if let dest = segue.destination as? addProductController {
                 dest.listOfProducts = listOfProducts[category]
