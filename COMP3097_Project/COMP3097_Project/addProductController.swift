@@ -28,7 +28,7 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         self.currentListOfProducts.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         currentListOfProducts.delegate=self
-        currentListOfProducts.dataSource=self    }
+        currentListOfProducts.dataSource=self    } // testing for a commit
     
     func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int)->Int{
         return self.listOfProducts.count
