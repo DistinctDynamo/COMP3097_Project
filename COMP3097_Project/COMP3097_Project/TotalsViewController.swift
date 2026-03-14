@@ -8,6 +8,9 @@
 import UIKit
 
 class TotalsViewController: UIViewController {
+    
+        var categories: [String] = []
+        var listOfProducts: [[Product]] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
