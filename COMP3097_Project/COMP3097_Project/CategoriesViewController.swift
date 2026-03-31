@@ -76,7 +76,6 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
             
         }
         self.fetchCategories()
-        
         //listOfProducts.append([])
     }
     
@@ -103,12 +102,10 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
             if let dest = segue.destination as? addProductController {
                 
             }
-
         case "viewAddCategory":
             if let dest = segue.destination as? addCategoryController {
                 dest.delegate = self
             }
-            
         case "totalsFromCategories":
             if let dest = segue.destination as? TotalsViewController {
                         
@@ -117,4 +114,5 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
             print("Unknown segue:", segue.identifier ?? "nil")
         }
     }
+    
 }
