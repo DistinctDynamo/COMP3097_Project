@@ -8,11 +8,10 @@
 import UIKit
 import CoreData
 
-class CategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddCategoryDelegate, AddProductDelegate{
+class CategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddCategoryDelegate{
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var categories:[Category]?
-    var category:Int = 0
     //var listOfProducts:[[Product]]=[]
     let cellReuseIdentifier = "cell"
     
@@ -40,10 +39,29 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
-    func tableView(_ tableViiew:UITableView, didSelectRowAt indexPath: IndexPath){
-        category=indexPath.row
+    func tableView(_ tableView:UITableView, didSelectRowAt indexPath: IndexPath){
+        self.categories?[indexPath.row]
         print(indexPath.row)
         performSegue(withIdentifier:"viewAddProducts", sender: self)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)->UISwipeActionsConfiguration? {
+        
+        let action = UIContextualAction(style: .destructive, title:"Delete") {
+            (action, view, completionHandler) in
+            
+            let categoryToRemove = self.categories![indexPath.row]
+            
+            self.context.delete(categoryToRemove)
+            
+            do{
+               try self.context.save()
+            }catch{
+                
+            }
+            self.fetchCategories()
+        }
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
     func didAddCategory(_ categoryName: String) {
@@ -51,6 +69,9 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         newCategory.name = categoryName
         do{
             try self.context.save()
+            DispatchQueue.main.async {
+                self.listOfCategories.reloadData()
+            }
         }catch{
             
         }
@@ -62,6 +83,9 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     func fetchCategories(){
         do{
             self.categories = try context.fetch(Category.fetchRequest())
+            DispatchQueue.main.async {
+                self.listOfCategories.reloadData()
+            }
         }catch{
             
         }
@@ -77,9 +101,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         switch segue.identifier {
         case "viewAddProducts":
             if let dest = segue.destination as? addProductController {
-                //dest.listOfProducts = listOfProducts[category]
-                dest.categoryIndex = category
-                dest.delegate = self
+                
             }
 
         case "viewAddCategory":
@@ -88,11 +110,9 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
         case "totalsFromCategories":
-                    if let dest = segue.destination as? TotalsViewController {
-                        //dest.categories = self.categories
-                        //dest.listOfProducts = self.listOfProducts
-                    }
-
+            if let dest = segue.destination as? TotalsViewController {
+                        
+            }
         default:
             print("Unknown segue:", segue.identifier ?? "nil")
         }

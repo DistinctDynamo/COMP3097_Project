@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol AddProductDelegate: AnyObject {
-    func didUpdateProducts(_ products: [Product], forCategoryAt index: Int)
-}
+//protocol AddProductDelegate: AnyObject {
+ //   func didUpdateProducts(_ products: [Product], forCategoryAt index: Int)
+//}
 
 class addProductController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var listOfProducts:[Product]=[]
     var categoryIndex: Int = 0
-    weak var delegate: AddProductDelegate?
+    //weak var delegate: AddProductDelegate?
     
     let cellReuseIdentifier = "cell"
     
@@ -83,16 +83,16 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         
-        let newProduct = Product(name: name, quantity: quantity, price: price)
-            listOfProducts.append(newProduct)
+        //let newProduct = Product(name: name, quantity: quantity, price: price)
+            //listOfProducts.append(newProduct)
 
-            delegate?.didUpdateProducts(listOfProducts, forCategoryAt: categoryIndex)
+            //delegate?.didUpdateProducts(listOfProducts, forCategoryAt: categoryIndex)
 
-            currentListOfProducts.reloadData()
+            //currentListOfProducts.reloadData()
 
-            nameTextField.text = ""
-            priceTextField.text = ""
-            quantityTextField.text = ""
+            //nameTextField.text = ""
+           // priceTextField.text = ""
+            //quantityTextField.text = ""
     }
     
     /*

@@ -7,13 +7,13 @@
 
 import Foundation
 
-class Product{
-    var price:Double
-    var quantity:Int
-    var name:String
-    init(name:String,quantity:Int,price:Double){
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-    }
-}
+//class Product{
+//    var price:Double
+//    var quantity:Int
+//    var name:String
+//    init(name:String,quantity:Int,price:Double){
+//        self.name = name
+//        self.price = price
+//        self.quantity = quantity
+//    }
+//}
