@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import CoreData
 
 class CategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddCategoryDelegate, AddProductDelegate{
-
-    var categories:[String] = []
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var categories:[Category]?
     var category:Int = 0
-    var listOfProducts:[[Product]]=[]
+    //var listOfProducts:[[Product]]=[]
     let cellReuseIdentifier = "cell"
     
     @IBOutlet weak var listOfCategories: UITableView!
@@ -22,15 +24,19 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         self.listOfCategories.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         listOfCategories.delegate=self
         listOfCategories.dataSource=self
+        
+        fetchCategories()
     }
     
     func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int)->Int{
-        return self.categories.count
+        return self.categories?.count ?? 0
     }
     
     func tableView(_ tableView:UITableView, cellForRowAt indexPath: IndexPath)->UITableViewCell{
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as UITableViewCell
-        cell.textLabel?.text = categories[indexPath.row]
+        let currentCategory = self.categories![indexPath.row]
+        
+        cell.textLabel?.text = currentCategory.name
         return cell
     }
     
@@ -41,15 +47,29 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func didAddCategory(_ categoryName: String) {
-        categories.append(categoryName)
-        listOfProducts.append([])
-        print(categories)
-        listOfCategories.reloadData()
+        let newCategory = Category(context: self.context)
+        newCategory.name = categoryName
+        do{
+            try self.context.save()
+        }catch{
+            
+        }
+        self.fetchCategories()
+        
+        //listOfProducts.append([])
     }
     
-    func didUpdateProducts(_ products: [Product], forCategoryAt index: Int) {
-        listOfProducts[index] = products
+    func fetchCategories(){
+        do{
+            self.categories = try context.fetch(Category.fetchRequest())
+        }catch{
+            
+        }
     }
+    
+  //  func didUpdateProducts(_ products: [Product], forCategoryAt index: Int) {
+  //      listOfProducts[index] = products
+  //  }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("Segue identifier:", segue.identifier ?? "nil")
@@ -57,7 +77,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         switch segue.identifier {
         case "viewAddProducts":
             if let dest = segue.destination as? addProductController {
-                dest.listOfProducts = listOfProducts[category]
+                //dest.listOfProducts = listOfProducts[category]
                 dest.categoryIndex = category
                 dest.delegate = self
             }
@@ -69,8 +89,8 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
             
         case "totalsFromCategories":
                     if let dest = segue.destination as? TotalsViewController {
-                        dest.categories = self.categories
-                        dest.listOfProducts = self.listOfProducts
+                        //dest.categories = self.categories
+                        //dest.listOfProducts = self.listOfProducts
                     }
 
         default:
