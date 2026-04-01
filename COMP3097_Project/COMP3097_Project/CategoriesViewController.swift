@@ -14,6 +14,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     var categories:[Category]?
     //var listOfProducts:[[Product]]=[]
     let cellReuseIdentifier = "cell"
+    var categoryName = ""
     
     @IBOutlet weak var listOfCategories: UITableView!
     
@@ -40,7 +41,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView:UITableView, didSelectRowAt indexPath: IndexPath){
-        self.categories?[indexPath.row]
+        categoryName = self.categories![indexPath.row].name ?? ""
         print(indexPath.row)
         performSegue(withIdentifier:"viewAddProducts", sender: self)
     }
@@ -100,7 +101,7 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         switch segue.identifier {
         case "viewAddProducts":
             if let dest = segue.destination as? addProductController {
-                
+                dest.categoryName = categoryName
             }
         case "viewAddCategory":
             if let dest = segue.destination as? addCategoryController {

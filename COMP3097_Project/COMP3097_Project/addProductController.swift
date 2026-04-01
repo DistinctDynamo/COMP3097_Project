@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 //protocol AddProductDelegate: AnyObject {
  //   func didUpdateProducts(_ products: [Product], forCategoryAt index: Int)
@@ -16,7 +17,10 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
     var listOfProducts:[Product]=[]
     var categoryIndex: Int = 0
     //weak var delegate: AddProductDelegate?
+    var category:Category?
+    var categoryName:String?
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let cellReuseIdentifier = "cell"
     
     @IBOutlet weak var priceTextField: UITextField!
@@ -28,7 +32,46 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         self.currentListOfProducts.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         currentListOfProducts.delegate=self
-        currentListOfProducts.dataSource=self    } // testing for a commit
+        currentListOfProducts.dataSource=self
+        
+        fetchCategory()
+        fetchProducts()
+    }
+    
+    func fetchCategory(){
+        do{
+            let request = Category.fetchRequest() as NSFetchRequest<Category>
+            
+            let pred = NSPredicate(format: "name == %@", "\(categoryName ?? "")")
+            request.predicate = pred
+            request.fetchLimit = 1
+            
+            self.category = try context.fetch(request).first
+    
+            DispatchQueue.main.async {
+                self.currentListOfProducts.reloadData()
+            }
+        }catch{
+            
+        }
+    }
+    
+    func fetchProducts(){
+        do{
+            let request2 = Product.fetchRequest() as NSFetchRequest<Product>
+            
+            let pred2 = NSPredicate(format: "category.name == %@",  "\(categoryName ?? "")")
+            request2.predicate = pred2
+            
+            self.listOfProducts = try context.fetch(request2
+            )
+            DispatchQueue.main.async {
+                self.currentListOfProducts.reloadData()
+            }
+        }catch{
+            
+        }
+    }
     
     func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int)->Int{
         return self.listOfProducts.count
@@ -76,33 +119,21 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         guard let quantityText = quantityTextField.text,
-              let quantity = Int(quantityText),
+              let quantity = Int16(quantityText),
               quantity >= 0
         else {
             showAlert(message: "Please enter a valid quantity")
             return
         }
         
-        //let newProduct = Product(name: name, quantity: quantity, price: price)
-            //listOfProducts.append(newProduct)
-
-            //delegate?.didUpdateProducts(listOfProducts, forCategoryAt: categoryIndex)
-
-            //currentListOfProducts.reloadData()
-
-            //nameTextField.text = ""
-           // priceTextField.text = ""
-            //quantityTextField.text = ""
+        let newProduct = Product(context: context)
+        newProduct.name = name
+        newProduct.price = price
+        newProduct.quantity = quantity
+        
+        newProduct.category = category
+        
+        try! context.save()
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
