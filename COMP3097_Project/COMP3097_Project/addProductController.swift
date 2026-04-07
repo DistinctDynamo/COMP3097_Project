@@ -13,12 +13,14 @@ import CoreData
 //}
 
 class addProductController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     var listOfProducts:[Product]=[]
     var categoryIndex: Int = 0
     //weak var delegate: AddProductDelegate?
     var category:Category?
     var categoryName:String?
+    
+    var selectedProduct:Product?
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let cellReuseIdentifier = "cell"
@@ -27,6 +29,7 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var currentListOfProducts: UITableView!
+    @IBOutlet weak var addProductButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +50,7 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
             request.fetchLimit = 1
             
             self.category = try context.fetch(request).first
-    
+            
             DispatchQueue.main.async {
                 self.currentListOfProducts.reloadData()
             }
@@ -55,7 +58,7 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
             
         }
     }
-    		
+    
     func fetchProducts(){
         do{
             let request2 = Product.fetchRequest() as NSFetchRequest<Product>
@@ -79,7 +82,7 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-
+        
         let product = listOfProducts[indexPath.row]
         
         let productName = product.name!
@@ -88,8 +91,36 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-    func tableView(_ tableViiew:UITableView, didSelectRowAt indexPath: IndexPath){
-        print(indexPath.row)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let product = listOfProducts[indexPath.row]
+        selectedProduct = product
+        
+        nameTextField.text = product.name ?? ""
+        priceTextField.text = String(product.price)
+        quantityTextField.text = String(product.quantity)
+        
+        addProductButton.setTitle("Update Product", for: .normal)
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let product = listOfProducts[indexPath.row]
+            
+            if selectedProduct === product {
+                clearFields()
+            }
+            
+            context.delete(product)
+            
+            do {
+                try context.save()
+                fetchProducts()
+            } catch {
+                showAlert(message: "Failed to delete product.")
+            }
+        }
     }
     
     @IBAction func dismiss(_ sender: Any) {
@@ -103,6 +134,13 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         
         present(alert, animated: true)
     }
+    
+    func clearFields() {
+        selectedProduct = nil
+        nameTextField.text = ""
+        priceTextField.text = ""
+        quantityTextField.text = ""
+        addProductButton.setTitle("Add Product", for: .normal)    }
     
     @IBAction func addProduct(_ sender: Any) {
         guard let name = nameTextField.text,
@@ -128,21 +166,22 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         
-        let newProduct = Product(context: context)
-        newProduct.name = name
-        newProduct.price = price
-        newProduct.quantity = quantity
-        newProduct.category = category
+        if let product = selectedProduct {
+            product.name = name
+            product.price = price
+            product.quantity = quantity
+        } else {
+            let newProduct = Product(context: context)
+            newProduct.name = name
+            newProduct.price = price
+            newProduct.quantity = quantity
+            newProduct.category = category
+        }
         
         do {
-            try context.save()  
-            
+            try context.save()
             fetchProducts()
-            
-            nameTextField.text = ""
-            priceTextField.text = ""
-            quantityTextField.text = ""
-            
+            clearFields()
         } catch {
             showAlert(message: "Failed to save product.")
         }

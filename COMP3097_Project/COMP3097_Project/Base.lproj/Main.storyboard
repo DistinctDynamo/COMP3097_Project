@@ -273,6 +273,7 @@ Grand Total                                      108.72</string>
                     </view>
                     <navigationItem key="navigationItem" id="py5-jA-74Q"/>
                     <connections>
+                        <outlet property="addProductButton" destination="A1p-l3-eU9" id="xfB-kH-3zd"/>
                         <outlet property="currentListOfProducts" destination="N2i-DB-2TU" id="pwJ-iG-pE0"/>
                         <outlet property="nameTextField" destination="lll-MI-ZbX" id="fKy-yr-Hhj"/>
                         <outlet property="priceTextField" destination="v6F-vc-PeI" id="aui-Xa-dtO"/>
