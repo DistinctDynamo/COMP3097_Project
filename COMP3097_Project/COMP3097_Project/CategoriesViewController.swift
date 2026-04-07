@@ -12,9 +12,8 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var categories:[Category]?
-    //var listOfProducts:[[Product]]=[]
     let cellReuseIdentifier = "cell"
-    var categoryName = ""
+    var selectedCategory: Category?
     
     @IBOutlet weak var listOfCategories: UITableView!
     
@@ -40,10 +39,9 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
-    func tableView(_ tableView:UITableView, didSelectRowAt indexPath: IndexPath){
-        categoryName = self.categories![indexPath.row].name ?? ""
-        print(indexPath.row)
-        performSegue(withIdentifier:"viewAddProducts", sender: self)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCategory = self.categories![indexPath.row]
+        performSegue(withIdentifier: "viewAddProducts", sender: self)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)->UISwipeActionsConfiguration? {
@@ -52,32 +50,95 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
             (action, view, completionHandler) in
             
             let categoryToRemove = self.categories![indexPath.row]
-            
             self.context.delete(categoryToRemove)
             
-            do{
-               try self.context.save()
-            }catch{
-                
+            do {
+                try self.context.save()
+                self.fetchCategories()
+                completionHandler(true)
+            } catch {
+                self.showAlert(message: "Failed to delete category.")
+                completionHandler(false)
             }
+            
             self.fetchCategories()
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
     
+    func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let renameAction = UIContextualAction(style: .normal, title: "Rename") {
+            (action, view, completionHandler) in
+
+            let categoryToRename = self.categories![indexPath.row]
+
+            let alert = UIAlertController(
+                title: "Rename Category",
+                message: "Enter a new category name.",
+                preferredStyle: .alert
+            )
+
+            alert.addTextField { textField in
+                textField.text = categoryToRename.name
+                textField.placeholder = "Category name"
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                completionHandler(false)
+            }
+
+            let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+                guard let newName = alert.textFields?.first?.text?
+                        .trimmingCharacters(in: .whitespacesAndNewlines),
+                      !newName.isEmpty else {
+                    self.showAlert(message: "Please enter a valid category name.")
+                    completionHandler(false)
+                    return
+                }
+
+                categoryToRename.name = newName
+
+                do {
+                    try self.context.save()
+                    self.fetchCategories()
+                    completionHandler(true)
+                } catch {
+                    self.showAlert(message: "Failed to rename category.")
+                    completionHandler(false)
+                }
+            }
+
+            alert.addAction(cancelAction)
+            alert.addAction(saveAction)
+
+            self.present(alert, animated: true)
+        }
+
+        renameAction.backgroundColor = .systemBlue
+
+        let configuration = UISwipeActionsConfiguration(actions: [renameAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+    
     func didAddCategory(_ categoryName: String) {
         let newCategory = Category(context: self.context)
         newCategory.name = categoryName
-        do{
+
+        do {
             try self.context.save()
-            DispatchQueue.main.async {
-                self.listOfCategories.reloadData()
-            }
-        }catch{
-            
+            self.fetchCategories()
+        } catch {
+            self.showAlert(message: "Failed to add category.")
         }
-        self.fetchCategories()
-        //listOfProducts.append([])
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
     func fetchCategories(){
@@ -91,17 +152,14 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-  //  func didUpdateProducts(_ products: [Product], forCategoryAt index: Int) {
-  //      listOfProducts[index] = products
-  //  }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("Segue identifier:", segue.identifier ?? "nil")
 
         switch segue.identifier {
         case "viewAddProducts":
             if let dest = segue.destination as? addProductController {
-                dest.categoryName = categoryName
+                dest.category = selectedCategory
+                dest.categoryName = selectedCategory?.name
             }
         case "viewAddCategory":
             if let dest = segue.destination as? addCategoryController {
