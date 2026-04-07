@@ -97,7 +97,15 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
                     completionHandler(false)
                     return
                 }
-
+                
+                if self.categories?.contains(where: {
+                    $0 != categoryToRename && $0.name?.caseInsensitiveCompare(newName) == .orderedSame
+                }) == true {
+                    self.showAlert(message: "A category with that name already exists.")
+                    completionHandler(false)
+                    return
+                }
+                
                 categoryToRename.name = newName
 
                 do {
@@ -124,14 +132,28 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func didAddCategory(_ categoryName: String) {
+        let trimmedName = categoryName.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !trimmedName.isEmpty else {
+            showAlert(message: "Please enter a valid category name.")
+            return
+        }
+
+        if categories?.contains(where: {
+            $0.name?.caseInsensitiveCompare(trimmedName) == .orderedSame
+        }) == true {
+            showAlert(message: "A category with that name already exists.")
+            return
+        }
+
         let newCategory = Category(context: self.context)
-        newCategory.name = categoryName
+        newCategory.name = trimmedName
 
         do {
             try self.context.save()
             self.fetchCategories()
         } catch {
-            self.showAlert(message: "Failed to add category.")
+            showAlert(message: "Failed to add category.")
         }
     }
     

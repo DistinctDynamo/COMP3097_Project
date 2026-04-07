@@ -59,20 +59,22 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func fetchProducts(){
-        do{
+    func fetchProducts() {
+        guard let category = category else { return }
+
+        do {
             let request2 = Product.fetchRequest() as NSFetchRequest<Product>
-            
-            let pred2 = NSPredicate(format: "category.name == %@",  "\(categoryName ?? "")")
+
+            let pred2 = NSPredicate(format: "category == %@", category)
             request2.predicate = pred2
-            
-            self.listOfProducts = try context.fetch(request2
-            )
+
+            self.listOfProducts = try context.fetch(request2)
+
             DispatchQueue.main.async {
                 self.currentListOfProducts.reloadData()
             }
-        }catch{
-            
+        } catch {
+
         }
     }
     
