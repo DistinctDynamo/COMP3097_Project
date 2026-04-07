@@ -123,79 +123,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uxH-Di-ZDy">
-                                <rect key="frame" x="16" y="133" width="361" height="152"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemGreenColor"/>
-                                <string key="text">Potato                                       1.64 X 10 = 16.40
-Zucchini                                    1.61 X 5 = 8.05
-Broccoli                                     3.88 X 3 = 11.64
-
-Subtotal                                     36.09
-Tax(0.13)                                    4.70 
-Grand Total                                40.79 </string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QK4-bh-mgP">
-                                <rect key="frame" x="16" y="293" width="361" height="117"/>
-                                <color key="backgroundColor" systemColor="systemTealColor"/>
-                                <string key="text">Item 1                                        10.24 X 1 = 10.24
-
-Subtotal                                    10.24
-Tax(0.13)                                   1.33 
-Grand Total                               11.57 </string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WGb-6g-L5f">
-                                <rect key="frame" x="16" y="418" width="361" height="130.66666666666666"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemPurpleColor"/>
-                                <string key="text">Item 1                                      2.99 X 12 = 35.88
-Item 2                                     7.00 X 2 = 14.00
-
-Subtotal                                 49.88
-Tax(0.13)                                6.48 
-Grand Total                            56.36</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sxH-Tt-l4j">
-                                <rect key="frame" x="16" y="556" width="361" height="130.66666666666666"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemGray3Color"/>
-                                <string key="text">Vegetables                                        40.79
-Medicine                                            11.57
-Cleaning Products                             56.36
-
-Tax Total(0.13)                                   12.51           
-Grand Total                                      108.72</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pKp-Ge-ZkP">
+                                <rect key="frame" x="35" y="148" width="358" height="670"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="feC-Z6-fsp">
+                                        <rect key="frame" x="30" y="0.0" width="270.66666666666669" height="670"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="feC-Z6-fsp" firstAttribute="trailing" secondItem="JFo-WG-xYr" secondAttribute="trailing" constant="20" id="D4r-Rp-bwZ"/>
+                                    <constraint firstItem="feC-Z6-fsp" firstAttribute="width" secondItem="N9Z-q1-V1N" secondAttribute="width" multiplier="0.755725" id="JOW-9u-kWn"/>
+                                    <constraint firstItem="feC-Z6-fsp" firstAttribute="top" secondItem="JFo-WG-xYr" secondAttribute="top" constant="20" id="S0C-Wb-lhQ"/>
+                                    <constraint firstItem="feC-Z6-fsp" firstAttribute="leading" secondItem="JFo-WG-xYr" secondAttribute="leading" constant="30" id="j3i-Ec-hwb"/>
+                                    <constraint firstItem="feC-Z6-fsp" firstAttribute="bottom" secondItem="JFo-WG-xYr" secondAttribute="bottom" id="jMm-am-H79"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="JFo-WG-xYr"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="N9Z-q1-V1N"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rhw-9Q-m8O"/>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                         <constraints>
-                            <constraint firstItem="QK4-bh-mgP" firstAttribute="centerY" secondItem="rhw-9Q-m8O" secondAttribute="centerY" id="G51-6U-NS6"/>
+                            <constraint firstItem="pKp-Ge-ZkP" firstAttribute="bottom" secondItem="rhw-9Q-m8O" secondAttribute="bottom" id="Bf7-g4-bK7"/>
+                            <constraint firstItem="pKp-Ge-ZkP" firstAttribute="leading" secondItem="rhw-9Q-m8O" secondAttribute="leading" constant="35" id="GTS-SG-XMg"/>
+                            <constraint firstItem="pKp-Ge-ZkP" firstAttribute="top" secondItem="rhw-9Q-m8O" secondAttribute="top" id="JAj-Mu-GaH"/>
+                            <constraint firstItem="rhw-9Q-m8O" firstAttribute="trailing" secondItem="pKp-Ge-ZkP" secondAttribute="trailing" id="py6-Ze-5hA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Total and Subtotals" style="editor" id="yim-u1-zfO"/>
                     <connections>
-                        <outlet property="category1TextView" destination="uxH-Di-ZDy" id="yxx-jl-4oA"/>
-                        <outlet property="category2TextView" destination="QK4-bh-mgP" id="kGT-3l-tCf"/>
-                        <outlet property="category3TextView" destination="WGb-6g-L5f" id="f8R-9B-Ijn"/>
-                        <outlet property="overallTotalTextView" destination="sxH-Tt-l4j" id="O9f-oe-4Cq"/>
+                        <outlet property="totalsStackView" destination="feC-Z6-fsp" id="7aR-GR-8Vr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUP-lg-AG3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2639" y="565"/>
+            <point key="canvasLocation" x="2638.9312977099235" y="564.78873239436621"/>
         </scene>
         <!--Add Product Controller-->
         <scene sceneID="Tpg-Tt-RYN">
@@ -409,29 +371,14 @@ Grand Total                                      108.72</string>
         <segue reference="ant-mA-CzV"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemIndigoColor">
             <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

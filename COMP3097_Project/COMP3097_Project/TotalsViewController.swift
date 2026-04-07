@@ -6,88 +6,111 @@
 //
 
 import UIKit
+import CoreData
 
 class TotalsViewController: UIViewController {
     
-    var categories: [String] = []
-    var listOfProducts: [[Product]] = []
-    
-    @IBOutlet weak var category1TextView: UITextView!
-    @IBOutlet weak var category2TextView: UITextView!
-    @IBOutlet weak var category3TextView: UITextView!
-    @IBOutlet weak var overallTotalTextView: UITextView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet weak var totalsStackView: UIStackView!
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        // Call the calculation function as soon as the view loads
-        calculateAndDisplayCategories()
-    }
-    
-    func calculateAndDisplayCategories() {
-        // 1. Hide all text views initially
-        category1TextView.isHidden = true
-        category2TextView.isHidden = true
-        category3TextView.isHidden = true
-        overallTotalTextView.isHidden = true
-        
-        // Variables to keep track of the OVERALL totals for the gray box
-        var overallTax = 0.0
-        var overallGrandTotal = 0.0
-        var grayBoxText = ""
-        
-        // 2. Loop through the categories
-        for (index, categoryName) in categories.enumerated() {
-            if index > 2 { break }
-            
-            let products = listOfProducts[index]
-            var categoryText = ""
-            var subtotal = 0.0
-            
-            // Calculate individual products
-            for product in products {
-                let itemTotal = product.price * Double(product.quantity)
-                subtotal += itemTotal
-                categoryText += "\(product.name)\t\t\(String(format: "%.2f", product.price)) X \(product.quantity) = \(String(format: "%.2f", itemTotal))\n"
-            }
-            
-            // Calculate category totals
-            let tax = subtotal * 0.13
-            let grandTotal = subtotal + tax
-            
-            // Add to the OVERALL totals
-            overallTax += tax
-            overallGrandTotal += grandTotal
-            
-            // Add this category's summary to the gray box text
-            grayBoxText += "\(categoryName)\t\t\(String(format: "%.2f", grandTotal))\n"
-            
-            // Finish formatting the colored box text
-            categoryText += "\nSubtotal\t\t\(String(format: "%.2f", subtotal))"
-            categoryText += "\nTax(0.13)\t\t\(String(format: "%.2f", tax))"
-            categoryText += "\nGrand Total\t\t\(String(format: "%.2f", grandTotal))"
-            
-            // 3. Put the text into the correct colored box
-            if index == 0 {
-                category1TextView.text = categoryText
-                category1TextView.isHidden = false
-            } else if index == 1 {
-                category2TextView.text = categoryText
-                category2TextView.isHidden = false
-            } else if index == 2 {
-                category3TextView.text = categoryText
-                category3TextView.isHidden = false
-            }
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            calculateAndDisplayDynamicCategories()
         }
         
-        // 4. Finish formatting the gray box and display it!
-        grayBoxText += "\nTax Total(0.13)\t\t\(String(format: "%.2f", overallTax))"
-        grayBoxText += "\nGrand Total\t\t\(String(format: "%.2f", overallGrandTotal))"
+        func calculateAndDisplayDynamicCategories() {
+            // 1. Fetch all Categories directly from Core Data
+            var fetchedCategories: [Category] = []
+            do {
+                fetchedCategories = try context.fetch(Category.fetchRequest())
+            } catch {
+                print("Failed to fetch categories")
+                return
+            }
+            
+            // Variables for the Gray Box (Overall Totals)
+            var overallTax = 0.0
+            var overallGrandTotal = 0.0
+            var grayBoxText = ""
+            
+            // Array of colors to cycle through dynamically
+            let boxColors: [UIColor] = [.systemGreen, .systemPurple.withAlphaComponent(0.3), .systemCyan, .systemOrange, .systemRed.withAlphaComponent(0.3), .systemYellow]
+            
+            // 2. Loop through every single category dynamically
+            for (index, category) in fetchedCategories.enumerated() {
+                guard let categoryName = category.name else { continue }
+                
+                var subtotal = 0.0
+                var categoryText = "Category: \(categoryName.capitalized)\n\n"
+                
+                // 3. Fetch Products for this specific category from Core Data
+                var categoryProducts: [Product] = []
+                let productRequest = Product.fetchRequest() as NSFetchRequest<Product>
+                productRequest.predicate = NSPredicate(format: "category == %@", category)
+                
+                do {
+                    categoryProducts = try context.fetch(productRequest)
+                } catch {
+                    print("Failed to fetch products for \(categoryName)")
+                }
+                
+                // 4. Calculate individual products in this category
+                for product in categoryProducts {
+                    guard let productName = product.name else { continue }
+                    let itemTotal = product.price * Double(product.quantity)
+                    subtotal += itemTotal
+                    
+                
+                    categoryText += "\(productName)\t\t\(String(format: "%.2f", product.price)) * \(product.quantity) = \(String(format: "%.2f", itemTotal))\n"
+                }
+                
+                // Calculate category totals
+                let tax = subtotal * 0.13
+                let grandTotal = subtotal + tax
+                
+                // Add to overall totals
+                overallTax += tax
+                overallGrandTotal += grandTotal
+                
+                // Add to gray box summary
+                grayBoxText += "\(categoryName)\t\t\(String(format: "%.2f", grandTotal))\n"
+                
+                // Finish formatting the colored box text
+                categoryText += "\nSubtotal\t\t\(String(format: "%.2f", subtotal))"
+                categoryText += "\nTax(0.13)\t\t\(String(format: "%.2f", tax))"
+                categoryText += "\nGrand Total\t\t\(String(format: "%.2f", grandTotal))"
+                
+                // 5. Create a dynamic text view for this category!
+                let categoryBox = createTextView(text: categoryText, backgroundColor: boxColors[index % boxColors.count])
+                totalsStackView.addArrangedSubview(categoryBox)
+            }
+            
+            // 6. Finish formatting and create the overall Gray Box!
+            grayBoxText += "\nTax Total(0.13)\t\t\(String(format: "%.2f", overallTax))"
+            grayBoxText += "\nGrand Total\t\t\(String(format: "%.2f", overallGrandTotal))"
+            
+            let grayBox = createTextView(text: grayBoxText, backgroundColor: .lightGray)
+            totalsStackView.addArrangedSubview(grayBox)
+        }
         
-        overallTotalTextView.text = grayBoxText
-        overallTotalTextView.isHidden = false
+        // Helper function to dynamically generate your text views in Swift
+        func createTextView(text: String, backgroundColor: UIColor) -> UITextView {
+            let textView = UITextView()
+            textView.isScrollEnabled = false
+            textView.sizeToFit()
+            textView.text = text
+            textView.backgroundColor = backgroundColor
+            textView.textColor = .black
+            textView.font = UIFont.systemFont(ofSize: 16)
+            textView.isEditable = false
+            
+            // This makes sure the text view grows to fit its content inside the Stack View!
+            textView.isScrollEnabled = false
+            textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            
+            return textView
+        }
     }
-}
 
     /*
     // MARK: - Navigation

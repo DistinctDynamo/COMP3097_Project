@@ -149,7 +149,6 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
 
         let newCategory = Category(context: self.context)
         newCategory.name = trimmedName
-
         do {
             try self.context.save()
             self.fetchCategories()
