@@ -55,7 +55,7 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
             
         }
     }
-    
+    		
     func fetchProducts(){
         do{
             let request2 = Product.fetchRequest() as NSFetchRequest<Product>
@@ -81,8 +81,10 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
 
         let product = listOfProducts[indexPath.row]
-        cell.textLabel?.text = "\(product.name) | Qty: \(product.quantity) | $\(product.price)"
-
+        
+        let productName = product.name!
+        cell.textLabel?.text = "\(productName) | Qty: \(product.quantity) | $\(product.price)"
+        
         return cell
     }
     
@@ -130,10 +132,20 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         newProduct.name = name
         newProduct.price = price
         newProduct.quantity = quantity
-        
         newProduct.category = category
         
-        try! context.save()
+        do {
+            try context.save()
+            
+            fetchProducts()
+            
+            nameTextField.text = ""
+            priceTextField.text = ""
+            quantityTextField.text = ""
+            
+        } catch {
+            showAlert(message: "Failed to save product.")
+        }
     }
 
 }
