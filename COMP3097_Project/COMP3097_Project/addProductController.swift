@@ -90,12 +90,19 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let product = listOfProducts[indexPath.row]
+
+        if selectedProduct === product {
+            clearFields()
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+
         selectedProduct = product
-        
+
         nameTextField.text = product.name ?? ""
         priceTextField.text = String(product.price)
         quantityTextField.text = String(product.quantity)
-        
+
         addProductButton.setTitle("Update Product", for: .normal)
     }
     
@@ -137,7 +144,12 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         nameTextField.text = ""
         priceTextField.text = ""
         quantityTextField.text = ""
-        addProductButton.setTitle("Add Product", for: .normal)    }
+        addProductButton.setTitle("Add Product", for: .normal)
+        
+        if let selectedIndexPath = currentListOfProducts.indexPathForSelectedRow {
+             currentListOfProducts.deselectRow(at: selectedIndexPath, animated: true)
+         }
+    }
     
     @IBAction func addProduct(_ sender: Any) {
         guard let name = nameTextField.text,
