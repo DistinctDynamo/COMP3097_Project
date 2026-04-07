@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddCategoryDelegate: AnyObject {
-    func didAddCategory(_ categoryName: String)
+    func didAddCategory(_ categoryName: String) -> Bool
 }
 
 class addCategoryController: UIViewController {
@@ -32,16 +32,20 @@ class addCategoryController: UIViewController {
     }
     
     @IBAction func addCategoryAction(_ sender: Any) {
-        let trimmedName = categoryNameField.text?.trimmingCharacters(in: .whitespaces) ?? ""
-        
+        let trimmedName = categoryNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
         if trimmedName.isEmpty {
             showAlert(message: "Please enter a category name")
             return
         }
-        
-        self.categoryName = trimmedName
-        delegate?.didAddCategory(trimmedName)
-        dismiss(animated: true)
+
+        let success = delegate?.didAddCategory(trimmedName) ?? false
+
+        if success {
+            dismiss(animated: true)
+        } else {
+            showAlert(message: "A category with that name already exists.")
+        }
     }
     
     @IBAction func dismiss(_ sender: Any) {

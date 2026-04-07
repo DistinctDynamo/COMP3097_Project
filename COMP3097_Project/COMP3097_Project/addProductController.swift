@@ -8,15 +8,10 @@
 import UIKit
 import CoreData
 
-//protocol AddProductDelegate: AnyObject {
- //   func didUpdateProducts(_ products: [Product], forCategoryAt index: Int)
-//}
-
 class addProductController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var listOfProducts:[Product]=[]
     var categoryIndex: Int = 0
-    //weak var delegate: AddProductDelegate?
     var category:Category?
     var categoryName:String?
     

@@ -131,19 +131,20 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         return configuration
     }
     
-    func didAddCategory(_ categoryName: String) {
+    func didAddCategory(_ categoryName: String) -> Bool {
         let trimmedName = categoryName.trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !trimmedName.isEmpty else {
             showAlert(message: "Please enter a valid category name.")
-            return
+            return false
         }
 
         if categories?.contains(where: {
-            $0.name?.caseInsensitiveCompare(trimmedName) == .orderedSame
+            $0.name?.trimmingCharacters(in: .whitespacesAndNewlines)
+                .caseInsensitiveCompare(trimmedName) == .orderedSame
         }) == true {
             showAlert(message: "A category with that name already exists.")
-            return
+            return false
         }
 
         let newCategory = Category(context: self.context)
@@ -152,8 +153,12 @@ class CategoriesViewController: UIViewController, UITableViewDelegate, UITableVi
         do {
             try self.context.save()
             self.fetchCategories()
+            return true
         } catch {
+            self.context.delete(newCategory)
             showAlert(message: "Failed to add category.")
+            print("Error saving category: \(error)")
+            return false
         }
     }
     
