@@ -135,7 +135,7 @@ class addProductController: UIViewController, UITableViewDelegate, UITableViewDa
         newProduct.category = category
         
         do {
-            try context.save()
+            try context.save()  
             
             fetchProducts()
             
