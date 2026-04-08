@@ -31,7 +31,7 @@ class TotalsViewController: UIViewController {
             // Variables for the Gray Box (Overall Totals)
             var overallTax = 0.0
             var overallGrandTotal = 0.0
-            var grayBoxText = ""
+            var grayBoxText = "Final Total:\n\n"
             
             // Array of colors to cycle through dynamically
             let boxColors: [UIColor] = [.systemGreen, .systemPurple.withAlphaComponent(0.3), .systemCyan, .systemOrange, .systemRed.withAlphaComponent(0.3), .systemYellow]
